@@ -95,7 +95,7 @@ class EqualsTest extends PHPUnit_Framework_TestCase
 		$a = new BrowserAgent();
 
 		$this->assertEquals('Unknown', $a->get_agent_info('Bogus agent','full'));
-		$this->assertEquals(0, $a->get_agent_info('Bogus agent','match'));
+		$this->assertEquals(0, $a->get_agent_info('Bogus agent','confidence'));
 	}
 
 } // End of class

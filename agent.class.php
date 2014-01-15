@@ -14,7 +14,7 @@ class BrowserAgent
 
 		$agent_info = $this->parse_agent($agent);
 
-		if ($piece) {
+		if (isset($piece) && isset($agent_info[$piece]) ) {
 			return($agent_info[$piece]);
 		}
 
@@ -27,13 +27,15 @@ class BrowserAgent
 		$ret['engine']  = $this->extract_engine($str);
 
 		if ($ret['browser'] && $ret['os']) {
-			$browser = $ret['browser']['name'];
-			if ($ret['browser']['version']) {
+			$browser  = $ret['browser']['name'];
+			$browserv = BrowserAgent::var_set($ret['browser']['version']);
+			if ($browserv) {
 				$browser .= " " . $ret['browser']['version'];
 			}
 
-			$os = $ret['os']['name'];
-			if ($ret['os']['version']) {
+			$os  = $ret['os']['name'];
+			$osv = BrowserAgent::var_set($ret['os']['version']);
+			if ($osv) {
 				$os .= " " . $ret['os']['version'];
 			}
 
@@ -51,27 +53,27 @@ class BrowserAgent
 	private function calculate_confidence($info) {
 		$confidence = 0;
 
-		if ($info['browser'] && $info['browser']['name']) {
+		if (isset($info['browser']) && isset($info['browser']['name'])) {
 			$confidence++;
 		}
 
-		if ($info['browser'] && $info['browser']['version']) {
+		if (isset($info['browser']) && isset($info['browser']['version'])){
 			$confidence++;
 		}
 
-		if ($info['os'] && $info['os']['name']) {
+		if (isset($info['os']) && isset($info['os']['name'])) {
 			$confidence++;
 		}
 
-		if ($info['os'] && $info['os']['version']) {
+		if (isset($info['os']) && isset($info['os']['version'])) {
 			$confidence++;
 		}
 
-		if ($info['engine'] && $info['engine']['name']) {
+		if (isset($info['engine']) && isset($info['engine']['name'])) {
 			$confidence++;
 		}
 
-		if ($info['engine'] && $info['engine']['version']) {
+		if (isset($info['engine']) && isset($info['engine']['version'])) {
 			$confidence++;
 		}
 
@@ -84,19 +86,21 @@ class BrowserAgent
 		if (preg_match("|Windows NT ?([\d\.]+)?|",$str,$m)) {
 			$ret['name'] = 'Windows';
 
-			if ($m[1] == 5.0) {
-				$ret['version'] = '2000';
-			} elseif ($m[1] == 5.1 || $m[1] == 5.2) { // 5.1 = 32 bit, 5.2 = 64bit
-				$ret['version'] = 'XP';
-			} elseif ($m[1] == 6.0) {
-				$ret['version'] = 'Vista';
-			} elseif ($m[1] == 6.1) {
-				$ret['version'] = '7';
-			} elseif ($m[1] == 6.2) {
-				$ret['version'] = '8';
-			} elseif ($m[1] == 6.3) {
-				$ret['version'] = '8.1';
-			} elseif (!$m[1]) {
+			if (isset($m[1])) {
+				if ($m[1] == 5.0) {
+					$ret['version'] = '2000';
+				} elseif ($m[1] == 5.1 || $m[1] == 5.2) { // 5.1 = 32 bit, 5.2 = 64bit
+					$ret['version'] = 'XP';
+				} elseif ($m[1] == 6.0) {
+					$ret['version'] = 'Vista';
+				} elseif ($m[1] == 6.1) {
+					$ret['version'] = '7';
+				} elseif ($m[1] == 6.2) {
+					$ret['version'] = '8';
+				} elseif ($m[1] == 6.3) {
+					$ret['version'] = '8.1';
+				}
+			} else {
 				$ret['version'] = 'NT';
 			}
 		} elseif (preg_match("/(iPad|iPhone).*OS ([\d_\.]+) /i",$str,$m)) {
@@ -106,7 +110,7 @@ class BrowserAgent
 			$ret['version'] = $version;
 		} elseif (preg_match("/(Android) ?([\d\.]+)?/",$str,$m)) {
 			$ret['name']    = $m[1];
-			$ret['version'] = $m[2];
+			$ret['version'] = BrowserAgent::var_set($m[2],"");
 		} elseif (preg_match("/(Linux|FreeBSD) ?(x86_64|i\d+|arm.*?|amd64)?\b/i",$str,$m)) {
 			$ret['name']    = $m[1];
 			$ret['version'] = $m[2];
@@ -175,6 +179,14 @@ class BrowserAgent
 		}
 
 		return $ret;
+	}
+
+	private function var_set(&$value, $default = null) {
+		if (isset($value)) {
+			return $value;
+		} else {
+			return $default;
+		}
 	}
 
 } // End of class
