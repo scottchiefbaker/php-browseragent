@@ -83,6 +83,8 @@ class BrowserAgent
 	}
 
 	private function extract_os($str) {
+		$ret = array();
+
 		if (preg_match("|Windows NT ?([\d\.]+)?|",$str,$m)) {
 			$ret['name'] = 'Windows';
 
@@ -125,14 +127,14 @@ class BrowserAgent
 		} elseif (preg_match("/Windows (95|98|ME|CE|XP)[;\)]/",$str,$m)) {
 			$ret['name']    = 'Windows';
 			$ret['version'] = $m[1];
-		} else {
-			$ret = array();
 		}
 
 		return $ret;
 	}
 
 	private function extract_browser($str) {
+		$ret = array();
+
 		// Firefox
 		if (preg_match("|(Firefox)/([\d.]+)$|",$str,$m)) {
 			$ret['name']    = $m[1];
@@ -160,15 +162,13 @@ class BrowserAgent
 		} elseif (preg_match("|(Opera) ([\d.]+)|",$str,$m)) {
 			$ret['name']    = 'Opera';
 			$ret['version'] = $m[2];
-		} else {
-			$ret = array();
 		}
 
 		return $ret;
 	}
 
 	private function extract_engine($str) {
-		$ret = "";
+		$ret = array();
 
 		if (preg_match("/(Trident|AppleWebKit|Presto)\/([\d\.]+)/",$str,$m)) {
 			$ret['name']    = $m[1];
