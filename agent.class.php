@@ -1,5 +1,7 @@
 <?PHP
 
+error_reporting(E_ALL);
+
 class BrowserAgent
 {
 
@@ -65,7 +67,15 @@ class BrowserAgent
 			$confidence++;
 		}
 
-		$ret = intval(($confidence / 4) * 100);
+		if ($info['engine'] && $info['engine']['name']) {
+			$confidence++;
+		}
+
+		if ($info['engine'] && $info['engine']['version']) {
+			$confidence++;
+		}
+
+		$ret = intval(($confidence / 6) * 100);
 
 		return $ret;
 	}
@@ -154,9 +164,14 @@ class BrowserAgent
 	}
 
 	private function extract_engine($str) {
-		if (preg_match("/(Trident|AppleWebKit|Gecko|Presto)\/([\d\.]+)/",$str,$m)) {
+		$ret = "";
+
+		if (preg_match("/(Trident|AppleWebKit|Presto)\/([\d\.]+)/",$str,$m)) {
 			$ret['name']    = $m[1];
 			$ret['version'] = $m[2];
+		} elseif (preg_match("/rv:([\d\.]+)\).*Gecko/",$str,$m)) {
+			$ret['name']    = 'Gecko';
+			$ret['version'] = $m[1];
 		}
 
 		return $ret;
