@@ -86,21 +86,21 @@ class BrowserAgent
 		if (preg_match("|Windows NT ?([\d\.]+)?|",$str,$m)) {
 			$ret['name'] = 'Windows';
 
-			if (isset($m[1])) {
-				if ($m[1] == 5.0) {
-					$ret['version'] = '2000';
-				} elseif ($m[1] == 5.1 || $m[1] == 5.2) { // 5.1 = 32 bit, 5.2 = 64bit
-					$ret['version'] = 'XP';
-				} elseif ($m[1] == 6.0) {
-					$ret['version'] = 'Vista';
-				} elseif ($m[1] == 6.1) {
-					$ret['version'] = '7';
-				} elseif ($m[1] == 6.2) {
-					$ret['version'] = '8';
-				} elseif ($m[1] == 6.3) {
-					$ret['version'] = '8.1';
-				}
-			} else {
+			$ver = BrowserAgent::var_set($m[1],"");
+
+			if ($ver == 5.0) {
+				$ret['version'] = '2000';
+			} elseif ($ver == 5.1 || $m[1] == 5.2) { // 5.1 = 32 bit, 5.2 = 64bit
+				$ret['version'] = 'XP';
+			} elseif ($ver == 6.0) {
+				$ret['version'] = 'Vista';
+			} elseif ($ver == 6.1) {
+				$ret['version'] = '7';
+			} elseif ($ver == 6.2) {
+				$ret['version'] = '8';
+			} elseif ($ver == 6.3) {
+				$ret['version'] = '8.1';
+			} elseif (!$ver) {
 				$ret['version'] = 'NT';
 			}
 		} elseif (preg_match("/(iPad|iPhone).*OS ([\d_\.]+) /i",$str,$m)) {
