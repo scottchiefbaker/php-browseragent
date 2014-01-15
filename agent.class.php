@@ -152,7 +152,7 @@ class BrowserAgent
 			$ret['name']    = "Internet Explorer";
 			$ret['version'] = $m[1];
 		// Safari
-		} elseif (preg_match("@Version/([\d.]+).*Safari@",$str,$m)) {
+		} elseif (preg_match("@\) Version/([\d.]+).*Safari@",$str,$m)) {
 			$ret['name']    = "Safari";
 			$ret['version'] = $m[1];
 		// Old Opera
