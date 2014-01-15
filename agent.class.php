@@ -170,10 +170,10 @@ class BrowserAgent
 	private function extract_engine($str) {
 		$ret = array();
 
-		if (preg_match("/(Trident|AppleWebKit|Presto)\/([\d\.]+)/",$str,$m)) {
+		if (preg_match("/\) (Trident|AppleWebKit|Presto)\/([\d\.]+)/",$str,$m)) {
 			$ret['name']    = $m[1];
 			$ret['version'] = $m[2];
-		} elseif (preg_match("/rv:([\d\.]+)\).*Gecko/",$str,$m)) {
+		} elseif (preg_match("/rv:([\d\.]+)\) Gecko/",$str,$m)) {
 			$ret['name']    = 'Gecko';
 			$ret['version'] = $m[1];
 		}
