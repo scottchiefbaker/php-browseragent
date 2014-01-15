@@ -173,6 +173,9 @@ class BrowserAgent
 		if (preg_match("/\) (Trident|AppleWebKit|Presto)\/([\d\.]+)/",$str,$m)) {
 			$ret['name']    = $m[1];
 			$ret['version'] = $m[2];
+		} elseif (preg_match("/; Trident\/([\d\.]+)/",$str,$m)) {
+			$ret['name']    = 'Trident';
+			$ret['version'] = $m[1];
 		} elseif (preg_match("/rv:([\d\.]+)\) Gecko/",$str,$m)) {
 			$ret['name']    = 'Gecko';
 			$ret['version'] = $m[1];
