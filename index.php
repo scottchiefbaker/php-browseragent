@@ -6,7 +6,11 @@ require('agent.class.php');
 
 $a = new BrowserAgent;
 
-$str  = $_GET['agent'];
+$str = "";
+if (isset($_GET['agent'])) {
+	$str  = $_GET['agent'];
+}
+
 $info = $a->get_agent_info($str);
 
 $out = print_r($info,1);
