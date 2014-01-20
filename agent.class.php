@@ -1,5 +1,7 @@
 <?PHP
 
+error_reporting(E_ALL);
+
 class BrowserAgent
 {
 
@@ -12,7 +14,7 @@ class BrowserAgent
 
 		$agent_info = $this->parse_agent($agent);
 
-		if ($piece) {
+		if (isset($piece) && isset($agent_info[$piece]) ) {
 			return($agent_info[$piece]);
 		}
 
@@ -25,13 +27,15 @@ class BrowserAgent
 		$ret['engine']  = $this->extract_engine($str);
 
 		if ($ret['browser'] && $ret['os']) {
-			$browser = $ret['browser']['name'];
-			if ($ret['browser']['version']) {
+			$browser  = $ret['browser']['name'];
+			$browserv = BrowserAgent::var_set($ret['browser']['version']);
+			if ($browserv) {
 				$browser .= " " . $ret['browser']['version'];
 			}
 
-			$os = $ret['os']['name'];
-			if ($ret['os']['version']) {
+			$os  = $ret['os']['name'];
+			$osv = BrowserAgent::var_set($ret['os']['version']);
+			if ($osv) {
 				$os .= " " . $ret['os']['version'];
 			}
 
@@ -49,44 +53,56 @@ class BrowserAgent
 	private function calculate_confidence($info) {
 		$confidence = 0;
 
-		if ($info['browser'] && $info['browser']['name']) {
+		if (isset($info['browser']) && isset($info['browser']['name'])) {
 			$confidence++;
 		}
 
-		if ($info['browser'] && $info['browser']['version']) {
+		if (isset($info['browser']) && isset($info['browser']['version'])){
 			$confidence++;
 		}
 
-		if ($info['os'] && $info['os']['name']) {
+		if (isset($info['os']) && isset($info['os']['name'])) {
 			$confidence++;
 		}
 
-		if ($info['os'] && $info['os']['version']) {
+		if (isset($info['os']) && isset($info['os']['version'])) {
 			$confidence++;
 		}
 
-		$ret = intval(($confidence / 4) * 100);
+		if (isset($info['engine']) && isset($info['engine']['name'])) {
+			$confidence++;
+		}
+
+		if (isset($info['engine']) && isset($info['engine']['version'])) {
+			$confidence++;
+		}
+
+		$ret = intval(($confidence / 6) * 100);
 
 		return $ret;
 	}
 
 	private function extract_os($str) {
+		$ret = array();
+
 		if (preg_match("|Windows NT ?([\d\.]+)?|",$str,$m)) {
 			$ret['name'] = 'Windows';
 
-			if ($m[1] == 5.0) {
+			$ver = BrowserAgent::var_set($m[1],"");
+
+			if ($ver == 5.0) {
 				$ret['version'] = '2000';
-			} elseif ($m[1] == 5.1 || $m[1] == 5.2) { // 5.1 = 32 bit, 5.2 = 64bit
+			} elseif ($ver == 5.1 || $m[1] == 5.2) { // 5.1 = 32 bit, 5.2 = 64bit
 				$ret['version'] = 'XP';
-			} elseif ($m[1] == 6.0) {
+			} elseif ($ver == 6.0) {
 				$ret['version'] = 'Vista';
-			} elseif ($m[1] == 6.1) {
+			} elseif ($ver == 6.1) {
 				$ret['version'] = '7';
-			} elseif ($m[1] == 6.2) {
+			} elseif ($ver == 6.2) {
 				$ret['version'] = '8';
-			} elseif ($m[1] == 6.3) {
+			} elseif ($ver == 6.3) {
 				$ret['version'] = '8.1';
-			} elseif (!$m[1]) {
+			} elseif (!$ver) {
 				$ret['version'] = 'NT';
 			}
 		} elseif (preg_match("/(iPad|iPhone).*OS ([\d_\.]+) /i",$str,$m)) {
@@ -96,7 +112,7 @@ class BrowserAgent
 			$ret['version'] = $version;
 		} elseif (preg_match("/(Android) ?([\d\.]+)?/",$str,$m)) {
 			$ret['name']    = $m[1];
-			$ret['version'] = $m[2];
+			$ret['version'] = BrowserAgent::var_set($m[2],"");
 		} elseif (preg_match("/(Linux|FreeBSD) ?(x86_64|i\d+|arm.*?|amd64)?\b/i",$str,$m)) {
 			$ret['name']    = $m[1];
 			$ret['version'] = $m[2];
@@ -111,14 +127,14 @@ class BrowserAgent
 		} elseif (preg_match("/Windows (95|98|ME|CE|XP)[;\)]/",$str,$m)) {
 			$ret['name']    = 'Windows';
 			$ret['version'] = $m[1];
-		} else {
-			$ret = array();
 		}
 
 		return $ret;
 	}
 
 	private function extract_browser($str) {
+		$ret = array();
+
 		// Firefox
 		if (preg_match("|(Firefox)/([\d.]+)$|",$str,$m)) {
 			$ret['name']    = $m[1];
@@ -136,7 +152,7 @@ class BrowserAgent
 			$ret['name']    = "Internet Explorer";
 			$ret['version'] = $m[1];
 		// Safari
-		} elseif (preg_match("@Version/([\d.]+).*Safari@",$str,$m)) {
+		} elseif (preg_match("@\) Version/([\d.]+).*Safari@",$str,$m)) {
 			$ret['name']    = "Safari";
 			$ret['version'] = $m[1];
 		// Old Opera
@@ -146,20 +162,34 @@ class BrowserAgent
 		} elseif (preg_match("|(Opera) ([\d.]+)|",$str,$m)) {
 			$ret['name']    = 'Opera';
 			$ret['version'] = $m[2];
-		} else {
-			$ret = array();
 		}
 
 		return $ret;
 	}
 
 	private function extract_engine($str) {
-		if (preg_match("/(Trident|AppleWebKit|Gecko|Presto)\/([\d\.]+)/",$str,$m)) {
+		$ret = array();
+
+		if (preg_match("/\) (Trident|AppleWebKit|Presto)\/([\d\.]+)/",$str,$m)) {
 			$ret['name']    = $m[1];
 			$ret['version'] = $m[2];
+		} elseif (preg_match("/; Trident\/([\d\.]+)/",$str,$m)) {
+			$ret['name']    = 'Trident';
+			$ret['version'] = $m[1];
+		} elseif (preg_match("/rv:([\d\.]+)\) Gecko/",$str,$m)) {
+			$ret['name']    = 'Gecko';
+			$ret['version'] = $m[1];
 		}
 
 		return $ret;
+	}
+
+	private function var_set(&$value, $default = null) {
+		if (isset($value)) {
+			return $value;
+		} else {
+			return $default;
+		}
 	}
 
 } // End of class
