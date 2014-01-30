@@ -8,13 +8,13 @@ class EqualsTest extends PHPUnit_Framework_TestCase
     public function test_firefox() {
 		$a = new BrowserAgent();
 
-        $this->assertEquals($a->get_agent_info('Mozilla/5.0 (X11; Linux x86_64; rv:29.0) Gecko/20100101 Firefox/29.0','full'),'Firefox 29.0 on Linux x86_64');
-        $this->assertEquals($a->get_agent_info('Mozilla/5.0 (Windows NT 6.1; rv:22.0) Gecko/20130405 Firefox/22.0','full'),'Firefox 22.0 on Windows 7');
-        $this->assertEquals($a->get_agent_info('Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20130331 Firefox/21.0','full'),'Firefox 21.0 on Windows 7');
-        $this->assertEquals($a->get_agent_info('Mozilla/5.0 (X11; Ubuntu; Linux armv7l; rv:17.0) Gecko/20100101 Firefox/17.0','full'),'Firefox 17.0 on Linux armv7l');
-        $this->assertEquals($a->get_agent_info('Mozilla/5.0 (X11; Ubuntu; Linux armv7l; rv:17.0) Gecko/20100101 Firefox/17.0','full'),'Firefox 17.0 on Linux armv7l');
-        $this->assertEquals($a->get_agent_info('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0','full'),'Firefox 24.0 on OS X 10.8');
-        $this->assertEquals($a->get_agent_info('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:25.0) Gecko/20100101 Firefox/25.0','full'),'Firefox 25.0 on OS X 10.6');
+		$this->assertEquals($a->get_agent_info('Mozilla/5.0 (X11; Linux x86_64; rv:29.0) Gecko/20100101 Firefox/29.0','full'),'Firefox 29.0 on Linux x86_64');
+		$this->assertEquals($a->get_agent_info('Mozilla/5.0 (Windows NT 6.1; rv:22.0) Gecko/20130405 Firefox/22.0','full'),'Firefox 22.0 on Windows 7');
+		$this->assertEquals($a->get_agent_info('Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20130331 Firefox/21.0','full'),'Firefox 21.0 on Windows 7');
+		$this->assertEquals($a->get_agent_info('Mozilla/5.0 (X11; Ubuntu; Linux armv7l; rv:17.0) Gecko/20100101 Firefox/17.0','full'),'Firefox 17.0 on Linux armv7l');
+		$this->assertEquals($a->get_agent_info('Mozilla/5.0 (X11; Ubuntu; Linux armv7l; rv:17.0) Gecko/20100101 Firefox/17.0','full'),'Firefox 17.0 on Linux armv7l');
+		$this->assertEquals($a->get_agent_info('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0','full'),'Firefox 24.0 on OS X 10.8');
+		$this->assertEquals($a->get_agent_info('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:25.0) Gecko/20100101 Firefox/25.0','full'),'Firefox 25.0 on OS X 10.6');
 
 		$this->assertEquals('Firefox 5.0 on FreeBSD amd64', $a->get_agent_info('Mozilla/5.0 (X11; FreeBSD amd64; rv:5.0) Gecko/20100101 Firefox/5.0','full'));
 		$this->assertEquals('Firefox 10.0 on OS X 10.4', $a->get_agent_info('Mozilla/5.0 (Macintosh; PPC Mac OS X 10.4; rv:10.0) Gecko/20100101 Firefox/10.0','full'));
