@@ -20,6 +20,7 @@ class EqualsTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('Firefox 10.0 on OS X 10.4', $a->get_agent_info('Mozilla/5.0 (Macintosh; PPC Mac OS X 10.4; rv:10.0) Gecko/20100101 Firefox/10.0','full'));
 		$this->assertEquals('Firefox 10.0 on Linux i686', $a->get_agent_info('Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0) Gecko/20100101 Firefox/10.0','full'));
 		$this->assertEquals('Firefox 25.0 on Windows 7', $a->get_agent_info('Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0','full'));
+		$this->assertEquals('Firefox 27.0 on Linux x86_64', $a->get_agent_info('Mozilla/5.0 (X11; Linux x86_64; rv:27.0) Gecko/20100101 Firefox/27.0','full'));
     }
 
     public function test_chrome() {
