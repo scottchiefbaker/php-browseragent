@@ -9,10 +9,10 @@ class BrowserAgent
 		$verbose = 0;
 	}
 
-	public function get_agent_info($agent = "", $piece = "") {
+	public function get_agent_info($agent = "", $piece = "",$opts = array()) {
 		$agent || $agent = $_SERVER["HTTP_USER_AGENT"];
 
-		$agent_info = $this->parse_agent($agent);
+		$agent_info = $this->parse_agent($agent,$opts);
 
 		if (isset($piece) && isset($agent_info[$piece]) ) {
 			return($agent_info[$piece]);
@@ -21,7 +21,7 @@ class BrowserAgent
 		return $agent_info;
 	}
 
-	private function parse_agent($str) {
+	private function parse_agent($str,$opts = array()) {
 		$ret['browser'] = $this->extract_browser($str);
 		$ret['os']      = $this->extract_os($str);
 		$ret['engine']  = $this->extract_engine($str);
@@ -29,7 +29,20 @@ class BrowserAgent
 		if ($ret['browser'] && $ret['os']) {
 			$browser  = $ret['browser']['name'];
 			$browserv = BrowserAgent::var_set($ret['browser']['version']);
+
 			if ($browserv) {
+				# If we're rounding we only return the first two octets (33.1.3.2024 = 33.1)
+				if (isset($opts['round_version']) && $opts['round_version']) {
+					$bv    = $ret['browser']['version'];
+
+					if (strstr($bv,'.')) {
+						$parts = preg_split("/\./",$bv);
+						$bv    = $parts[0] . "." . $parts[1];
+					}
+
+					$ret['browser']['version'] = $bv;
+				}
+
 				$browser .= " " . $ret['browser']['version'];
 			}
 
