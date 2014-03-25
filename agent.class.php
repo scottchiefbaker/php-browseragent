@@ -151,6 +151,10 @@ class BrowserAgent
 		} elseif (preg_match("|MSIE ([\d.abc]+);|",$str,$m)) {
 			$ret['name']    = "Internet Explorer";
 			$ret['version'] = $m[1];
+		// Alternate Internet Explorere
+		} elseif (preg_match("|Trident/([\d.]+); rv:([\d.]+)|",$str,$m)) {
+			$ret['name']    = "Internet Explorer";
+			$ret['version'] = $m[2];
 		// Safari
 		} elseif (preg_match("@\) Version/([\d.]+).*Safari@",$str,$m)) {
 			$ret['name']    = "Safari";
@@ -161,6 +165,9 @@ class BrowserAgent
 			$ret['version'] = $m[2];
 		} elseif (preg_match("|(Opera) ([\d.]+)|",$str,$m)) {
 			$ret['name']    = 'Opera';
+			$ret['version'] = $m[2];
+		} elseif (preg_match("/(curl|libwww|LWP::Simple)\/([\d.]+)/",$str,$m)) {
+			$ret['name']    = $m[1];
 			$ret['version'] = $m[2];
 		}
 
