@@ -26,7 +26,7 @@ class BrowserAgent
 		$ret['os']      = $this->extract_os($str);
 		$ret['engine']  = $this->extract_engine($str);
 
-		if ($ret['browser'] && $ret['os']) {
+		if ($ret['browser']) {
 			$browser  = $ret['browser']['name'];
 			$browserv = BrowserAgent::var_set($ret['browser']['version']);
 
@@ -46,13 +46,19 @@ class BrowserAgent
 				$browser .= " " . $ret['browser']['version'];
 			}
 
-			$os  = $ret['os']['name'];
-			$osv = BrowserAgent::var_set($ret['os']['version']);
-			if ($osv) {
-				$os .= " " . $ret['os']['version'];
+			if ($ret['os']) {
+				$os  = $ret['os']['name'];
+				$osv = BrowserAgent::var_set($ret['os']['version']);
+				if ($osv) {
+					$os .= " " . $ret['os']['version'];
+				}
 			}
 
-			$ret['full']  = sprintf("%s on %s",$browser,$os);
+			$ret['full'] = $browser;
+
+			if ($ret['os']) {
+				$ret['full'] .= " on $os";
+			}
 		} else {
 			$ret['full']  = "Unknown";
 		}

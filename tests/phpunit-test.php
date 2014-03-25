@@ -93,6 +93,13 @@ class EqualsTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('Opera 12.14 on Windows Vista', $a->get_agent_info('Mozilla/5.0 (Windows NT 6.0; rv:2.0) Gecko/20100101 Firefox/4.0 Opera 12.14','full'));
 	}
 
+    public function test_other() {
+		$a = new BrowserAgent();
+
+		$this->assertEquals('LWP::Simple 6.00', $a->get_agent_info('LWP::Simple/6.00 libwww-perl/6.05','full'));
+		$this->assertEquals('curl 7.32.0', $a->get_agent_info('curl/7.32.0','full'));
+	}
+
     public function test_bogus() {
 		$a = new BrowserAgent();
 
