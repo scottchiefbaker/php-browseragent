@@ -185,7 +185,7 @@ class BrowserAgent
 		} elseif (preg_match("|(Opera) ([\d.]+)|",$str,$m)) {
 			$ret['name']    = 'Opera';
 			$ret['version'] = $m[2];
-		} elseif (preg_match("/(curl|libwww|LWP::Simple)\/([\d.]+)/",$str,$m)) {
+		} elseif (preg_match("/^(curl|libwww-perl|LWP::Simple)\/([\d.]+)/",$str,$m)) {
 			$ret['name']    = $m[1];
 			$ret['version'] = $m[2];
 		}

@@ -98,6 +98,7 @@ class EqualsTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals('LWP::Simple 6.00', $a->get_agent_info('LWP::Simple/6.00 libwww-perl/6.05','full'));
 		$this->assertEquals('curl 7.32.0', $a->get_agent_info('curl/7.32.0','full'));
+		$this->assertEquals('libwww-perl 6.03', $a->get_agent_info('libwww-perl/6.03','full'));
 	}
 
     public function test_bogus() {
