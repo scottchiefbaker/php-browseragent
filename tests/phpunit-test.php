@@ -40,6 +40,13 @@ class EqualsTest extends PHPUnit_Framework_TestCase
 		#$this->assertEquals('', $a->get_agent_info('','full'));
 	}
 
+    public function test_edge() {
+		$a = new BrowserAgent();
+
+		$this->assertEquals('Edge 12.10136 on Windows 10', $a->get_agent_info('Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136','full'));
+		$this->assertEquals('Edge 13.7 on Windows 10.1', $a->get_agent_info('Mozilla/5.0 (Windows NT 10.1) Edge/13.7','full'));
+	}
+
     public function test_ie() {
 		$a = new BrowserAgent();
 
