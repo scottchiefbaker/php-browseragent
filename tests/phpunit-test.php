@@ -64,7 +64,7 @@ class EqualsTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('Internet Explorer 7.0 on Windows XP', $a->get_agent_info('Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 5.2; WOW64; .NET CLR 2.0.50727)','full'));
 		$this->assertEquals('Internet Explorer 6.1 on Windows XP', $a->get_agent_info('Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)','full'));
 		$this->assertEquals('Internet Explorer 5.5b1 on Macintosh PowerPC', $a->get_agent_info('Mozilla/4.0 (compatible; MSIE 5.5b1; Mac_PowerPC)','full'));
-		$this->assertEquals('Internet Explorer 10.0 on OS X 10.7.3', $a->get_agent_info('Mozilla/5.0 (compatible; MSIE 10.0; Macintosh; Intel Mac OS X 10_7_3; Trident/6.0)','full'));
+		$this->assertEquals('Internet Explorer 11.0 on Windows 7', $a->get_agent_info('Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; MDDRJS; rv:11.0) like Gecko','full'));
 	}
 
     public function test_android() {
