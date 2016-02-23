@@ -179,7 +179,7 @@ if (!class_exists('BrowserAgent')) {
 				$ret['name']    = "Internet Explorer";
 				$ret['version'] = $m[1];
 			// Alternate Internet Explorere
-			} elseif (preg_match("|Trident/([\d.]+); rv:([\d.]+)|",$str,$m)) {
+			} elseif (preg_match("|Trident/([\d.]+);.*rv:([\d.]+)|",$str,$m)) {
 				$ret['name']    = "Internet Explorer";
 				$ret['version'] = $m[2];
 			// Safari
