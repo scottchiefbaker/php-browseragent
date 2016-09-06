@@ -12,7 +12,9 @@ if (!class_exists('BrowserAgent')) {
 		}
 
 		public function get_agent_info($agent = "", $piece = "",$opts = array()) {
-			$agent || $agent = $_SERVER["HTTP_USER_AGENT"];
+			if (empty($agent)) {
+				$agent = $_SERVER["HTTP_USER_AGENT"];
+			}
 
 			$agent_info = $this->parse_agent($agent,$opts);
 
