@@ -3,7 +3,9 @@
 $file = __DIR__ . "/../agent.class.php";
 require($file);
 
-class EqualsTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+final class phpunit_test extends TestCase
 {
     public function test_firefox() {
 		$a = new BrowserAgent();
