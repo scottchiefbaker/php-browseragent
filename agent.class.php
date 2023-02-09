@@ -169,7 +169,7 @@ if (!class_exists('BrowserAgent')) {
 				$ret['name']    = 'Opera';
 				$ret['version'] = $m[1];
 			// Edge
-			} elseif (preg_match("#\bEdge/([\d.]+)$#",$str,$m)) {
+			} elseif (preg_match("#\bEdge?/([\d.]+)$#",$str,$m)) {
 				$ret['name']    = 'Edge';
 				$ret['version'] = $m[1];
 			// Chrome
