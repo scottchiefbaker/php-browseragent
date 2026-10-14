@@ -1,1 +1,0 @@
-{"version":1,"defects":{"phpunit_test::test_edge":3},"times":{"phpunit_test::test_firefox":0,"phpunit_test::test_chrome":0,"phpunit_test::test_edge":0,"phpunit_test::test_ie":0,"phpunit_test::test_android":0,"phpunit_test::test_apple":0,"phpunit_test::test_opera":0,"phpunit_test::test_other":0,"phpunit_test::test_bogus":0}}
