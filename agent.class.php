@@ -13,7 +13,7 @@ if (!class_exists('BrowserAgent')) {
 
 		public function get_agent_info($agent = "", $piece = "",$opts = array()) {
 			if (empty($agent)) {
-				$agent = $_SERVER["HTTP_USER_AGENT"];
+				$agent = $_SERVER["HTTP_USER_AGENT"] ?? "";
 			}
 
 			$agent_info = $this->parse_agent($agent,$opts);
@@ -26,6 +26,8 @@ if (!class_exists('BrowserAgent')) {
 		}
 
 		private function parse_agent($str,$opts = array()) {
+			$str = (string) $str;
+
 			$ret['browser'] = $this->extract_browser($str);
 			$ret['os']      = $this->extract_os($str);
 			$ret['engine']  = $this->extract_engine($str);
