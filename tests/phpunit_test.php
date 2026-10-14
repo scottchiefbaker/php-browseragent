@@ -47,6 +47,7 @@ final class phpunit_test extends TestCase
 
 		$this->assertEquals('Edge 12.10136 on Windows 10', $a->get_agent_info('Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136','full'));
 		$this->assertEquals('Edge 13.7 on Windows 10.1', $a->get_agent_info('Mozilla/5.0 (Windows NT 10.1) Edge/13.7','full'));
+		$this->assertEquals('Firefox 157.0 on Windows 13.1.0', $a->get_agent_info('Mozilla/5.0 (Windows NT 13.1.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0','full'));
 		$this->assertEquals('Edge 107.0.1418.30 on Windows 10', $a->get_agent_info('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.30','full'));
 		$this->assertEquals('Edge 91.0.866.0 on Windows 10', $a->get_agent_info('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4501.0 Safari/537.36 Edg/91.0.866.0','full'));
 	}
