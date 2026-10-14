@@ -125,7 +125,7 @@ if (!class_exists('BrowserAgent')) {
 					$ret['version'] = '8';
 				} elseif ($ver == 6.3) {
 					$ret['version'] = '8.1';
-				} elseif ($ver >= 10 && $ver < 11) {
+				} elseif ($ver >= 10 && $ver <= 15) {
 					$ret['version'] = $ver + 0;
 				} elseif (!$ver) {
 					$ret['version'] = 'NT';
