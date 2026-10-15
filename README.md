@@ -17,7 +17,7 @@ Usage
 
 ```php
 <?php
-require_once __DIR__ . '/agent.class.php';
+require_once('agent.class.php');
 
 $a = new BrowserAgent;
 
