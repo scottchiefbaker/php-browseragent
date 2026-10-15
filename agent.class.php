@@ -8,10 +8,9 @@ if (!class_exists('BrowserAgent')) {
 	{
 
 		public function __construct() {
-			$verbose = 0;
 		}
 
-		public function get_agent_info($agent = "", $piece = "",$opts = array()) {
+		public function get_agent_info(?string $agent = "", ?string $piece = "", array $opts = []): mixed {
 			if (empty($agent)) {
 				$agent = $_SERVER["HTTP_USER_AGENT"] ?? "";
 			}
@@ -25,7 +24,7 @@ if (!class_exists('BrowserAgent')) {
 			return $agent_info;
 		}
 
-		private function parse_agent($str,$opts = array()) {
+		private function parse_agent(string $str, array $opts = []): array {
 			$str = (string) $str;
 
 			$ret['browser'] = $this->extract_browser($str);
@@ -75,7 +74,7 @@ if (!class_exists('BrowserAgent')) {
 			return $ret;
 		}
 
-		private function calculate_confidence($info) {
+		private function calculate_confidence(array $info): int {
 			$confidence = 0;
 
 			if (isset($info['browser']) && isset($info['browser']['name'])) {
@@ -107,7 +106,7 @@ if (!class_exists('BrowserAgent')) {
 			return $ret;
 		}
 
-		private function extract_os($str) {
+		private function extract_os(string $str): array {
 			$ret = array();
 
 			if (preg_match("|Windows NT ?([\d\.]+)?|",$str,$m)) {
@@ -159,7 +158,7 @@ if (!class_exists('BrowserAgent')) {
 			return $ret;
 		}
 
-		private function extract_browser($str) {
+		private function extract_browser(string $str): array {
 			$ret = array();
 
 			// Firefox
@@ -205,7 +204,7 @@ if (!class_exists('BrowserAgent')) {
 			return $ret;
 		}
 
-		private function extract_engine($str) {
+		private function extract_engine(string $str): array {
 			$ret = array();
 
 			if (preg_match("/\) (Trident|AppleWebKit|Presto)\/([\d\.]+)/",$str,$m)) {
@@ -222,7 +221,7 @@ if (!class_exists('BrowserAgent')) {
 			return $ret;
 		}
 
-		private function var_set(&$value, $default = null) {
+		private function var_set(mixed &$value, mixed $default = null): mixed {
 			if (isset($value)) {
 				return $value;
 			} else {
